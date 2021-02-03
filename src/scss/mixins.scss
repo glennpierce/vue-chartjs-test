@@ -1,0 +1,89 @@
+@mixin empty-block {
+	display: block;
+	content: '';
+}
+
+@mixin at-least($min-width) {
+	@media all and (min-width: $min-width) {
+		@content
+	}
+}
+@mixin at-most($max-width) {
+	@media all and (max-width: $max-width - 1) {
+    @content 
+	}
+}
+@mixin between($min-width, $max-width) {
+  @media all and (min-width: $min-width) and (max-width: $max-width - 1) {
+    @content
+	}
+}
+
+@mixin center($position) {
+  position: absolute;
+
+  @if $position == 'vertical' {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  @else if $position == 'horizontal' {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+  }
+
+  @else if $position == 'both' {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+// CSS Triangles
+
+@mixin css-triangle($direction, $color, $height, $width) {
+    // Base styles for all triangles
+    border-style: solid;
+    height: 0;
+    width: 0;
+    // Cardinal Directions - can't be scalene
+    @if($direction == 'top') {
+        border-color: transparent transparent $color transparent;
+        border-width: 0 ($width/2) $height ($width/2);
+    }
+    @if ($direction == 'bottom') {
+        border-color: $color transparent transparent transparent;
+        border-width: $height ($width/2) 0 ($width/2);
+    }
+    @if ($direction == 'right') {
+        border-color: transparent transparent transparent $color;
+        border-width: ($height/2) 0 ($height/2) $width;
+    }
+    @if ($direction == 'left') {
+        border-color: transparent $color transparent transparent;
+        border-width: ($height/2) $width ($height/2) 0;
+    }
+    // Ordinal Directions - can be scalene
+    @if ($direction == 'top-left') {
+        border-color: $color transparent transparent transparent;
+        border-width: $height $width 0 0;
+    }
+    @if ($direction == 'top-right') {
+        border-color: transparent $color transparent transparent;
+        border-width: 0 $width $height 0;
+    }
+    @if ($direction == 'bottom-left') {
+        border-color: transparent transparent transparent $color;
+        border-width: $height 0 0 $width;
+    }
+    @if ($direction == 'bottom-right') {
+        border-color: transparent transparent $color transparent;
+        border-width: 0 0 $height $width;
+    }
+}
